@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "components/Button/Button";
+import {ROUTES} from 'constants/routes'
 
 import { PageWrapper, ButtonControl } from "./styles";
 
@@ -9,7 +10,7 @@ function About() {
   const navigate = useNavigate();
 
   const goToHomePage = () => {
-    navigate("/");
+    navigate(ROUTES.HOME);
   };
 
   const goBack = () => {

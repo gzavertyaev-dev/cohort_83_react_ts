@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { v4 } from "uuid";
+
+import { ROUTES, NAVIGATION_MENU_ROUTES } from "constants/routes";
 
 import {
   LayoutWrapper,
@@ -20,8 +23,40 @@ function Layout({ children }: LayoutProps) {
   const navigate = useNavigate();
 
   const goToHomePage = () => {
-    navigate("/");
+    navigate(ROUTES.HOME);
   };
+
+  const headerLinks = Object.keys(NAVIGATION_MENU_ROUTES).map((routeName) => {
+    return (
+      <HeaderLink
+        key={v4()}
+        style={getActiveStyles}
+        to={
+          NAVIGATION_MENU_ROUTES[
+            routeName as keyof typeof NAVIGATION_MENU_ROUTES
+          ]
+        }
+      >
+        {routeName}
+      </HeaderLink>
+    );
+  });
+
+  const footerLinks = Object.keys(NAVIGATION_MENU_ROUTES).map((routeName) => {
+    return (
+      <FooterLink
+        key={v4()}
+        to={
+          NAVIGATION_MENU_ROUTES[
+            routeName as keyof typeof NAVIGATION_MENU_ROUTES
+          ]
+        }
+      >
+        {routeName}
+      </FooterLink>
+    );
+  });
+
   return (
     <LayoutWrapper>
       <Header>
@@ -32,19 +67,22 @@ function Layout({ children }: LayoutProps) {
           />
         </Logo>
         <NavigationContainer>
-          <HeaderLink style={getActiveStyles} to="/">
+          {headerLinks}
+          {/* <HeaderLink style={getActiveStyles} to={ROUTES.HOME}>
             Home
           </HeaderLink>
-          {/* <HeaderLink >Clients</HeaderLink> */}
-          <HeaderLink style={getActiveStyles} to="/contactUs">
+          <HeaderLink to={ROUTES.CLIENTS} style={getActiveStyles}>
+            Clients
+          </HeaderLink>
+          <HeaderLink style={getActiveStyles} to={ROUTES.CONTACT_US}>
             Contact Us
           </HeaderLink>
-          <HeaderLink style={getActiveStyles} to="/about">
+          <HeaderLink style={getActiveStyles} to={ROUTES.ABOUT}>
             About
           </HeaderLink>
-          <HeaderLink style={getActiveStyles} to="/login">
+          <HeaderLink style={getActiveStyles} to={ROUTES.LOGIN}>
             Login
-          </HeaderLink>
+          </HeaderLink> */}
         </NavigationContainer>
       </Header>
       <Main>{children}</Main>
@@ -56,11 +94,12 @@ function Layout({ children }: LayoutProps) {
           />
         </FooterLogo>
         <FooterNavigation>
-          <FooterLink to="">Home</FooterLink>
-          {/* <FooterLink>Clients</FooterLink> */}
-          <FooterLink to="/contactUs">Contact Us</FooterLink>
-          <FooterLink to="/about">About</FooterLink>
-          <FooterLink to="/login">Login</FooterLink>
+          {/* <FooterLink to={ROUTES.HOME}>Home</FooterLink>
+          <FooterLink to={ROUTES.CLIENTS}>Clients</FooterLink>
+          <FooterLink to={ROUTES.CONTACT_US}>Contact Us</FooterLink>
+          <FooterLink to={ROUTES.ABOUT}>About</FooterLink>
+          <FooterLink to={ROUTES.LOGIN}>Login</FooterLink> */}
+          {footerLinks}
         </FooterNavigation>
       </Footer>
     </LayoutWrapper>
